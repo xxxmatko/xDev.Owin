@@ -49,7 +49,7 @@ namespace xDev.Owin
         /// <returns>Returns next middleware.</returns>
         public async override Task Invoke(IOwinContext context)
         {
-            string imageFilePath = HostingEnvironment.MapPath(context.Request.Path.Value);
+            string imageFilePath = HostingEnvironment.MapPath("~" + context.Request.Path.Value);
 
             // Check for the correct folder and image existance
             if (!context.Request.Path.StartsWithSegments(this._options.Folder) 
@@ -61,7 +61,7 @@ namespace xDev.Owin
             }
 
             // Check for the watermark image existance
-            string watermarkFilePath = HostingEnvironment.MapPath(this._options.Watermark.Value);
+            string watermarkFilePath = HostingEnvironment.MapPath("~" + this._options.Watermark.Value);
             if (string.IsNullOrEmpty(watermarkFilePath) || !File.Exists(watermarkFilePath))
             {
                 throw new FileNotFoundException("Watermark image was not found.", this._options.Watermark.Value);
